@@ -16,14 +16,14 @@ public class Main {
                     Education.values()[new Random().nextInt(Education.values().length)])
             );
         }
-//        Stream<Person> stream1 = persons.stream();
-//        System.out.println(stream1.filter(x -> x.getAge() < 18).count());
-//        Stream<Person> stream2 = persons.stream();
-//        System.out.println(stream2
-//                .filter(x -> x.getAge() >= 18)
-//                .filter(x -> x.getAge() < 27)
-//                .map(Person::getFamily)
-//                .collect(Collectors.toList()));
+        Stream<Person> stream1 = persons.stream();
+        System.out.println(stream1.filter(x -> x.getAge() < 18).count());
+        Stream<Person> stream2 = persons.stream();
+        System.out.println(stream2
+                .filter(x -> x.getAge() >= 18)
+                .filter(x -> x.getAge() < 27)
+                .map(Person::getFamily)
+                .collect(Collectors.toList()));
         Stream<Person> stream3 = persons.stream();
         System.out.println(stream3
                 .filter(x -> x.getEducation() == Education.HIGHER)
