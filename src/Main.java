@@ -3,11 +3,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
+    public static List<String> NAMES = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
+    public static List<String> FAMILIES = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
     public static void main(String[] args) {
-        List<String> names = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
-        List<String> families = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
+
+        Collection<Person> persons = generateRandomCollection(NAMES, FAMILIES);
+
+        System.out.println(countYounger18(persons));
+
+        System.out.println(maySolders(persons));
+
+        System.out.println(workingAge(persons));
+    }
+
+    public static Collection<Person> generateRandomCollection(List<String> names, List<String> families) {
         Collection<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 10_000_000; i++) {
+
+        for (int i = 0; i < 100; i++) {
             persons.add(new Person(
                     names.get(new Random().nextInt(names.size())),
                     families.get(new Random().nextInt(families.size())),
@@ -16,25 +28,30 @@ public class Main {
                     Education.values()[new Random().nextInt(Education.values().length)])
             );
         }
-        Stream<Person> stream1 = persons.stream();
-        System.out.println(stream1.filter(x -> x.getAge() < 18).count());
-        Stream<Person> stream2 = persons.stream();
-        System.out.println(stream2
+        return persons;
+    }
+
+    public static long countYounger18 (Collection<Person> persons) {
+        Stream<Person> stream = persons.stream();
+        return stream.filter(x -> x.getAge() < 18).count();
+    }
+
+    public static List<String> maySolders(Collection<Person> persons) {
+        Stream<Person> stream = persons.stream();
+        return stream
                 .filter(x -> x.getAge() >= 18)
                 .filter(x -> x.getAge() < 27)
                 .map(Person::getFamily)
-                .collect(Collectors.toList()));
-        Stream<Person> stream3 = persons.stream();
-        System.out.println(stream3
+                .collect(Collectors.toList());
+    }
+
+    public static List<Person> workingAge(Collection<Person> persons) {
+        Stream<Person> stream = persons.stream();
+        return stream
                 .filter(x -> x.getEducation() == Education.HIGHER)
                 .filter(x -> x.getAge() >= 18)
-                .filter(x -> {
-                    if (x.getSex() == Sex.MAN && x.getAge() < 65 || x.getSex() == Sex.WOMAN && x.getAge() < 60) {
-                        return true;
-                    }
-                    return false;
-                })
+                .filter(x -> (x.getSex() == Sex.MAN && x.getAge() < 65 || x.getSex() == Sex.WOMAN && x.getAge() < 60))
                 .sorted(Comparator.comparing(Person::getFamily))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
     }
 }
