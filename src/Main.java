@@ -5,20 +5,18 @@ import java.util.stream.Stream;
 public class Main {
     public static List<String> NAMES = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
     public static List<String> FAMILIES = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
+    public static Collection<Person> persons = new ArrayList<>();
+
     public static void main(String[] args) {
 
-        Collection<Person> persons = generateRandomCollection(NAMES, FAMILIES);
+        persons = generateRandomCollection(NAMES, FAMILIES);
 
         System.out.println(countYounger18(persons));
-
         System.out.println(maySolders(persons));
-
         System.out.println(workingAge(persons));
     }
 
     public static Collection<Person> generateRandomCollection(List<String> names, List<String> families) {
-        Collection<Person> persons = new ArrayList<>();
-
         for (int i = 0; i < 100; i++) {
             persons.add(new Person(
                     names.get(new Random().nextInt(names.size())),
