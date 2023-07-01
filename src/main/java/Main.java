@@ -3,20 +3,20 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Main {
-    public static List<String> NAMES = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
-    public static List<String> FAMILIES = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
     public static Collection<Person> persons = new ArrayList<>();
 
     public static void main(String[] args) {
 
-        persons = generateRandomCollection(NAMES, FAMILIES);
+        persons = generateRandomCollection();
 
         System.out.println(countYounger18(persons));
         System.out.println(maySolders(persons));
         System.out.println(workingAge(persons));
     }
 
-    public static Collection<Person> generateRandomCollection(List<String> names, List<String> families) {
+    public static Collection<Person> generateRandomCollection() {
+        List<String> names = Arrays.asList("Jack", "Connor", "Harry", "George", "Samuel", "John");
+        List<String> families = Arrays.asList("Evans", "Young", "Harris", "Wilson", "Davies", "Adamson", "Brown");
         for (int i = 0; i < 100; i++) {
             persons.add(new Person(
                     names.get(new Random().nextInt(names.size())),
